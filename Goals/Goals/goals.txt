@@ -1,0 +1,2 @@
+I would like to learn how to use C# Generics.
+Learn Application.LocalUserAppDataPath
