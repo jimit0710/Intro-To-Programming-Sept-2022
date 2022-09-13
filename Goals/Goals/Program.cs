@@ -16,7 +16,9 @@ Console.Write("\n[Save Changes(Y/n)] ");
 ConsoleKey response = Console.ReadKey(false).Key;
 
 // string path = @"C:\Users\ITUStudent\dev\Intro-To-Programming-Sept-2022\Goals\Goals\goals.txt";
-string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\dev\Intro-To-Programming-Sept-2022\Goals\Goals\goals.txt";
+// string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\dev\Intro-To-Programming-Sept-2022\Goals\Goals\goals.txt";
+string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\goals.txt";
+
 if (response.Equals(ConsoleKey.Enter) || response.Equals(ConsoleKey.Y)) 
 {
     if (!File.Exists(path))
