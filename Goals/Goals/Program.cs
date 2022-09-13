@@ -15,9 +15,9 @@ Console.WriteLine($"\"{goal}\"");
 Console.Write("\n[Save Changes(Y/n)] ");
 ConsoleKey response = Console.ReadKey(false).Key;
 
-// string path = @"C:\Users\ITUStudent\dev\Intro-To-Programming-Sept-2022\Goals\Goals\goals.txt";
-// string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\dev\Intro-To-Programming-Sept-2022\Goals\Goals\goals.txt";
-string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\goals.txt";
+string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\dev\Intro-To-Programming-Sept-2022\Goals\Goals\goals.txt";
+// string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\goals.txt";
+// string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "goals", "goals.txt");
 
 if (response.Equals(ConsoleKey.Enter) || response.Equals(ConsoleKey.Y)) 
 {
@@ -35,6 +35,18 @@ if (response.Equals(ConsoleKey.Enter) || response.Equals(ConsoleKey.Y))
             sw.WriteLine(goal);
         }
     }
+
+    //if (!Directory.Exists(path))
+    //{
+    //    Directory.CreateDirectory(path);
+    //}
+    //if (!File.Exists(path))
+    //{
+    //    File.Create(path);
+    //}
+
+    //File.AppendAllText(path, Environment.NewLine + goal);
+
 }
 
 

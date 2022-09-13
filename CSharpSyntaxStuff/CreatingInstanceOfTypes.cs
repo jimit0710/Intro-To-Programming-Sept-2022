@@ -25,6 +25,10 @@ public class CreatingInstanceOfTypes
         var x = 12;
         var y = "Monkey";
 
+        string yourName;
+        yourName = "Paul";
+        Assert.Equal("Paul", yourName);
+
         var bob = new Employee();
         var myPay = new PayCheck();
         var manager = new Manager();
@@ -64,7 +68,11 @@ public class CreatingInstanceOfTypes
 
 public class Employee { }
 
-public class PayCheck { }
+public class PayCheck 
+{
+    public decimal Amount;
+    public string Currency;
+}
 
 public class Manager
 {
