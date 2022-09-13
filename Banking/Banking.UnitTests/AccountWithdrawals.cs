@@ -26,17 +26,17 @@ public class AccountWithdrawals
         Assert.Equal(0, account.GetBalance());
     }
 
-    [Fact]
-    public void OverdraftIsCurrentlyAllowed()
-    {
-        var account = new BankAccount();
-        var openingBalance = account.GetBalance();
-        var amountToWithdraw = openingBalance + .01M;
+    //[Fact]
+    //public void OverdraftIsCurrentlyAllowed()
+    //{
+    //    var account = new BankAccount();
+    //    var openingBalance = account.GetBalance();
+    //    var amountToWithdraw = openingBalance + .01M;
 
-        account.Withdraw(amountToWithdraw);
+    //    account.Withdraw(amountToWithdraw);
 
-        Assert.Equal(openingBalance - amountToWithdraw, account.GetBalance());
-    }
+    //    Assert.Equal(openingBalance - amountToWithdraw, account.GetBalance());
+    //}
 
     [Fact]
     public void OverdraftDoesNotDecreaseBalance()
@@ -45,8 +45,27 @@ public class AccountWithdrawals
         var openingBalance = account.GetBalance();
         var amountToWithdraw = openingBalance + .01M;
 
-        account.Withdraw(amountToWithdraw);
+        try
+        {
+            account.Withdraw(amountToWithdraw);
+        }
+        catch (OverdraftException)
+        {
+            // Swallow!
+        }
+        finally
+        {
+            Assert.Equal(openingBalance, account.GetBalance());
+        }
+    }
 
-        Assert.Equal(openingBalance, account.GetBalance());
+    [Fact]
+    public void OverdraftThrowsAnException()
+    {
+        var account = new BankAccount();
+
+        Assert.Throws<OverdraftException>(() =>
+            account.Withdraw(account.GetBalance() + 1)
+        );
     }
 }
