@@ -26,7 +26,6 @@ private AccountHolder() { }
     public AccountHolder ChangeName(AccountHolder account, string newName)
     {
         return account with { Name = newName.ToUpper() };
-
     }
 }
 

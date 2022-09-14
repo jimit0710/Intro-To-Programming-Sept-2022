@@ -7,12 +7,10 @@ public class AccountHolderTests
         AccountHolder ah1;
         try
         {
-
-            ah1 = AccountHolder.Create("joe", "8989");
+ah1 = AccountHolder.Create("joe", "8989");
         }
         catch (ArgumentException)
         {
-
             throw;
         }
 

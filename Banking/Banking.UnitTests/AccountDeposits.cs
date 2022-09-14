@@ -4,10 +4,10 @@ namespace Banking.UnitTests;
 public class AccountDeposits
 {
     [Fact]
-    public void MNakingADepositIncreasesTheBalance()
+    public void MakingADepositIncreasesTheBalance()
     {
         // Given
-        var account = new BankAccount();
+        var account = new BankAccount(new DummyBonusCalculator());
         var openingBalance = account.GetBalance();
         var amountToDeposit = 10.15M;
         // When
