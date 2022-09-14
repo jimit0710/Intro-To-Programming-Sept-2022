@@ -1,29 +1,34 @@
 ﻿using Banking.Domain;
+using System.Net;
 
 namespace Banking.UnitTests;
 
 public class AccountWithdrawals
 {
+
+    private readonly BankAccount _account;
+    private readonly decimal _openingBalance;
+
+    public AccountWithdrawals()
+    {
+        _account = new BankAccount();
+        _openingBalance = _account.GetBalance();
+    }
+
+
     [Fact]
     public void WithdrawingMoneyDecreasesBalance()
     {
-        var account = new BankAccount();
-        var openingBalance = account.GetBalance();
         var amountToWithdraw = 10M;
-
-        account.Withdraw(amountToWithdraw);
-
-        Assert.Equal(openingBalance - amountToWithdraw, account.GetBalance());
+        _account.Withdraw(amountToWithdraw);
+        Assert.Equal(_openingBalance - amountToWithdraw, _account.GetBalance());
     }
 
     [Fact]
     public void UsersCanWitdrawFullBalance()
     {
-        var account = new BankAccount();
-
-        account.Withdraw(account.GetBalance());
-
-        Assert.Equal(0, account.GetBalance());
+        _account.Withdraw(_account.GetBalance());
+        Assert.Equal(0, _account.GetBalance());
     }
 
     //[Fact]
@@ -41,13 +46,11 @@ public class AccountWithdrawals
     [Fact]
     public void OverdraftDoesNotDecreaseBalance()
     {
-        var account = new BankAccount();
-        var openingBalance = account.GetBalance();
-        var amountToWithdraw = openingBalance + .01M;
+        var amountToWithdraw = _openingBalance + .01M;
 
         try
         {
-            account.Withdraw(amountToWithdraw);
+            _account.Withdraw(amountToWithdraw);
         }
         catch (OverdraftException)
         {
@@ -55,17 +58,15 @@ public class AccountWithdrawals
         }
         finally
         {
-            Assert.Equal(openingBalance, account.GetBalance());
+            Assert.Equal(_openingBalance, _account.GetBalance());
         }
     }
 
     [Fact]
     public void OverdraftThrowsAnException()
     {
-        var account = new BankAccount();
-
         Assert.Throws<OverdraftException>(() =>
-            account.Withdraw(account.GetBalance() + 1)
+            _account.Withdraw(_account.GetBalance() + 1)
         );
     }
 }
