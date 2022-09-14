@@ -1,12 +1,32 @@
 ﻿namespace Banking.Domain;
 
+public enum AccountLoyaltyLevel { Standard, Gold }
+
 public class BankAccount
 {
-    private decimal _balance = 5000M;
+    private decimal _balance = 5000M; //JFHCI
+    public AccountLoyaltyLevel AccountType { get; set; } = AccountLoyaltyLevel.Standard;
 
     public void Deposit(decimal amountToDeposit)
     {
-        _balance += amountToDeposit;
+        decimal bonus = GetBonusForDeposit(amountToDeposit);
+        _balance += amountToDeposit + bonus;
+    }
+
+    private decimal GetBonusForDeposit(decimal amountToDeposit)
+    {
+        decimal bonus = 0;
+        if (AccountType == AccountLoyaltyLevel.Gold)
+        {
+            bonus = amountToDeposit * .10M;
+        }
+
+        return bonus;
+    }
+
+    public decimal GetBalance()
+    {
+        return _balance;
     }
 
     public void Withdraw(decimal amountToWithdraw)
@@ -18,11 +38,6 @@ public class BankAccount
         {
             throw new OverdraftException();
         }
-    }
-
-    public decimal GetBalance()
-    {
-        return _balance;
     }
 
     private bool AccountHasAvailableFunds(decimal amountToWithdraw)
