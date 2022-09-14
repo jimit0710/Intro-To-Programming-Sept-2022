@@ -11,7 +11,7 @@ public class BankAccount
 
     public void Withdraw(decimal amountToWithdraw)
     {
-        if (amountToWithdraw <= _balance)
+        if (AccountHasAvailableFunds(amountToWithdraw))
         {
             _balance -= amountToWithdraw;
         } else
@@ -23,5 +23,10 @@ public class BankAccount
     public decimal GetBalance()
     {
         return _balance;
+    }
+
+    private bool AccountHasAvailableFunds(decimal amountToWithdraw)
+    {
+        return amountToWithdraw <= _balance;
     }
 }

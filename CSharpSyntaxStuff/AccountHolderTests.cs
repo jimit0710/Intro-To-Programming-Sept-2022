@@ -1,26 +1,26 @@
 ﻿namespace CSharpSyntaxStuff;
-
 public class AccountHolderTests
 {
     [Fact]
     public void AccountHolderStuff()
     {
-        var ah = new AccountHolder("Bob Smith", "xyz-pdq");
-        var ah2 = new AccountHolder("Jill Jones", "9999") { Email = "Jill@aol.com" };
-
-        // ah.Email = "Bob@aol.com";
-
-        var name = ah.Name;
-        // ah.Name = "Bob Smith";
-        Assert.Equal("Bob Smith", ah.Name);
-
-        // Assert.Equal("This Account Holder is Bob Smith", ah.GetInfo());
-
-        var rover = new Dog()
+        AccountHolder ah1;
+        try
         {
-            Name = "Rover",
-            Breed = "Terrier"
-        };
-        rover.RollOver();
+
+            ah1 = AccountHolder.Create("joe", "8989");
+        }
+        catch (ArgumentException)
+        {
+
+            throw;
+        }
+
+        Assert.Equal("JOE", ah1.Name);
+
+        var updatedAh1 = ah1.ChangeName(ah1, "bill");
+
+        Assert.Equal("BILL", updatedAh1.Name);
+        Assert.Equal("JOE", ah1.Name);
     }
 }

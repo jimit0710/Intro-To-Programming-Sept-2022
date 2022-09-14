@@ -1,40 +1,40 @@
-﻿using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
-
-namespace CSharpSyntaxStuff;
-
-public class AccountHolder
+﻿namespace CSharpSyntaxStuff;
+public record AccountHolder
 {
-       
-   public AccountHolder(string name, string accountNumber)
-    {
-        Name = name;
-        AccountNumber = accountNumber;
-    }
+private AccountHolder() { }
 
-    //public string Name
-    //{
-    //    get { return _name; }
-    //    set { _name = value; }
-    //}
     // backing field
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; private init; } = string.Empty;
 
     // "Auto Property"
-    public string Email { get; init; } = string.Empty;
-    
-    public string AccountNumber { get; private set; } = string.Empty; 
+    public string Email { get; private init; } = string.Empty;
+
+    public string AccountNumber { get; private init; } = string.Empty;
 
     public string GetInfo()
     {
         return $"This Account Holder is {Name} and reach them at {Email}";
     }
+
+    public static AccountHolder Create(string name, string acountNumber)
+    {
+        if (name == "jeff") throw new ArgumentException("That dude sucks!");
+
+        return new AccountHolder { Name = name.ToUpper(), AccountNumber = acountNumber };
+    }
+
+    public AccountHolder ChangeName(AccountHolder account, string newName)
+    {
+        return account with { Name = newName.ToUpper() };
+
+    }
 }
+
 
 public class Dog
 {
-    public string Name { get; set; }
-    public string Breed { get; set; }
+    public string Name { get; init; }
+    public string Breed { get; init; }
     public void RollOver()
     {
 
