@@ -2,9 +2,9 @@
 
 public class BankAccount
 {
-    private readonly ICalculateAccoutBonuses _bonusCalculator;
+    private readonly ICalculateAccountBonuses _bonusCalculator;
 
-    public BankAccount(ICalculateAccoutBonuses bonusCalculator)
+    public BankAccount(ICalculateAccountBonuses bonusCalculator)
     {
         _bonusCalculator = bonusCalculator;
     }
@@ -15,7 +15,7 @@ public class BankAccount
     {
         // Write the code you wish you had
 
-        decimal bonus = _bonusCalculator.GetBonusForDepositOnAccount(100000, amountToDeposit);
+        decimal bonus = _bonusCalculator.GetBonusForDepositOnAccount(_balance, amountToDeposit);
         _balance += amountToDeposit + bonus;
     }
 
