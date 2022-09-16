@@ -14,7 +14,7 @@ builder.Services.AddTransient<AccountManager>();
 
 builder.Services.AddSingleton<MongoAccountsAdapter>(sp =>
 {
-    var connectionString = "mongodb://root:TokyoJoe138!@localhost:27017";
+    var connectionString = builder.Configuration.GetConnectionString("mongo");
     return new MongoAccountsAdapter(connectionString);
 });
 

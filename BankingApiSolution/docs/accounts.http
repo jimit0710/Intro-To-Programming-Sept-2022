@@ -5,7 +5,7 @@ Accept: application/json
 
 ### Get An Account
 
-GET http://localhost:9000/accounts/01cea490-7f25-4a20-8756-c038a23cd5ba HTTP/1.1
+GET http://localhost:9000/accounts/85f97f0d-37b8-4875-8619-b5a8ff7a0bc2 HTTP/1.1
 Accept: application/json
 
 
@@ -16,5 +16,5 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "Joe Schmidt"
+    "name": "Temp"
 }
