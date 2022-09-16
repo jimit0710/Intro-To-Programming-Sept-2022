@@ -1,5 +1,4 @@
-﻿using Alba;
-namespace Banking.IntegrationTests;
+﻿namespace Banking.IntegrationTests;
 public class AccountResourceTests
 {
     [Fact]
