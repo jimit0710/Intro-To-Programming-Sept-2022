@@ -16,5 +16,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "Temp"
+    "name": "Kim Schmidt"
 }
+
+### Get an account's balance
+
+GET http://localhost:9000/accounts/569823f3-d8c0-48da-8fe4-043c57fc1eb5/balance HTTP/1.1

@@ -8,10 +8,14 @@ public class AccountManager
 {
 
     private readonly MongoAccountsAdapter _adapter;
+    private readonly ISystemTime _systemTime;
+    private readonly IBonusCalculatorApiAdapter _api;
 
-    public AccountManager(MongoAccountsAdapter adapter)
+    public AccountManager(MongoAccountsAdapter adapter, ISystemTime systemTime, IBonusCalculatorApiAdapter api)
     {
         _adapter = adapter;
+        _systemTime = systemTime;   
+        _api = api;
     }
 
     public async Task<CollectionResponse<AccountSummaryResponse>> GetAllAccountsAsync()
@@ -63,11 +67,12 @@ public class AccountManager
 
     public async Task<AccountTransactionResponse?> DepositAsync(string accountNumber, AccountTransactionRequest deposit)
     {
+        // Todo - the stored transaction should have an AmountDeposited property, a Bonus property, and a Total Property
         var transaction = new Transaction
         {
             TransactionId = Guid.NewGuid().ToString(),
             Amount = deposit.Amount,
-            PostedAt = DateTime.Now,
+            PostedAt = _systemTime.GetCurrent(),
             Type = "DEPOSIT"
         };
 
@@ -79,14 +84,23 @@ public class AccountManager
         {
             return null;
         }
-        var newBalance = entity.Balance + transaction.Amount;
+
+        var bcr = new BonusCalculationRequest 
+        {
+            AccountNumber = accountNumber,
+            AmountOfDeposit = transaction.Amount,
+            Balance = entity.Balance
+        };
+
+        var bonus = await _api.GetBonusForDepositAsync(bcr);
+        var newBalance = entity.Balance + transaction.Amount + bonus.Amount;
         var updateBalance = Builders<AccountEntity>.Update.Set(a => a.Balance, newBalance);
 
         await _adapter.Accounts.FindOneAndUpdateAsync(filter, updateBalance);
         return new AccountTransactionResponse
         {
             TransactionId = transaction.TransactionId,
-            Amount = transaction.Amount,
+            Amount = transaction.Amount + bonus.Amount,
             PostedAt = transaction.PostedAt,
             Type = transaction.Type
         };

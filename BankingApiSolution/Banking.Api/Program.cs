@@ -11,7 +11,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<AccountManager>();
-
+builder.Services.AddTransient<ISystemTime, SystemTime>();
+builder.Services.AddHttpClient<IBonusCalculatorApiAdapter, BonusCalculatorApiAdapter>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("bonus-api"));
+});
 builder.Services.AddSingleton<MongoAccountsAdapter>(sp =>
 {
     var connectionString = builder.Configuration.GetConnectionString("mongo");
