@@ -35,7 +35,6 @@ public class AccountsController : ControllerBase
         {
             return Ok(response);
         }
-        return Ok(response);
     }
 
     [HttpPost("/accounts")]
