@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SongListComponent } from './components/song-list/song-list.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { OverviewComponent } from './components/overview/overview.component';
-
+import { HttpClientModule } from '@angular/common/http';
 const routes: Routes = [
   {
     path: '',
@@ -34,7 +34,7 @@ const routes: Routes = [
     NavigationComponent,
     OverviewComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes), HttpClientModule],
   exports: [RouterModule],
 })
 export class PlaylistsModule {}
