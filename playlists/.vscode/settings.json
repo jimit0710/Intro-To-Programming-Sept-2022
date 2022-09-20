@@ -8,7 +8,7 @@
   "html.format.wrapAttributes": "force-aligned",
 
   "editor.formatOnSave": true,
-  "files.autoSave": "onFocusChange",
+  "files.autoSave": "afterDelay",
   "typescript.check.npmIsInstalled": true,
   "editor.snippetSuggestions": "top",
   "workbench.editor.labelFormat": "medium",
