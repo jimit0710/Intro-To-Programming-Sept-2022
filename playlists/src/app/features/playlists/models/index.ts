@@ -8,3 +8,9 @@ export interface SongListItem {
   artist: string;
   album?: string;
 }
+
+export interface SongCreate {
+  title: string;
+  artist: string;
+  album?: string;
+}

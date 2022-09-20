@@ -6,6 +6,8 @@ import { SongListComponent } from './components/song-list/song-list.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateComponent } from './components/create/create.component';
+import { ReactiveFormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: '',
@@ -33,8 +35,14 @@ const routes: Routes = [
     SongListComponent,
     NavigationComponent,
     OverviewComponent,
+    CreateComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes), HttpClientModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
   exports: [RouterModule],
 })
 export class PlaylistsModule {}
