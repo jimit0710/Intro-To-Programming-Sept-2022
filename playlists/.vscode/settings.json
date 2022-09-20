@@ -3,7 +3,7 @@
   "workbench.editor.wrapTabs": true,
   "workbench.editor.decorations.colors": true,
   "workbench.editor.decorations.badges": true,
-  "workbench.tree.indent": 25,
+  "workbench.tree.indent": 15,
   "breadcrumbs.enabled": true,
   "html.format.wrapAttributes": "force-aligned",
 
