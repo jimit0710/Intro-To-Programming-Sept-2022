@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { FEATURE_NAME, reducers } from './state';
 import { SongEffects } from './state/effects/song.effects';
 import { EffectsModule } from '@ngrx/effects';
+import { ListSorterComponent } from './components/list-sorter/list-sorter.component';
 const routes: Routes = [
   {
     path: '',
@@ -40,6 +41,7 @@ const routes: Routes = [
     NavigationComponent,
     OverviewComponent,
     CreateComponent,
+    ListSorterComponent,
   ],
   imports: [
     CommonModule,
