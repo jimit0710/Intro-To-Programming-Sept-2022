@@ -8,6 +8,8 @@ import { OverviewComponent } from './components/overview/overview.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateComponent } from './components/create/create.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { FEATURE_NAME, reducers } from './state';
 const routes: Routes = [
   {
     path: '',
@@ -42,6 +44,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpClientModule,
     ReactiveFormsModule,
+    StoreModule.forFeature(FEATURE_NAME, reducers),
   ],
   exports: [RouterModule],
 })
