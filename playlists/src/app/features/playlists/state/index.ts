@@ -6,6 +6,7 @@ import {
 import { SongListModel } from '../models';
 import * as fromSongs from './reducers/songs.reducer';
 import * as fromSongSorter from './reducers/song-sorter.reducer';
+import { SongListSortOptions } from './song-sorter.actions';
 export const FEATURE_NAME = 'playlists';
 
 // describe the state of this feature for typescript
@@ -40,9 +41,25 @@ export const selectSortingBy = createSelector(
   (b) => b.sortBy
 );
 export const selectSongListModel = createSelector(
-  selectSongListEntities,
-  (songs) =>
-    ({
-      data: songs,
-    } as SongListModel)
+  selectSongListEntities, // SongListEntity[] -> songs
+  selectSortingBy, // "title" => sortingBy
+  (songs, sortingBy) => {
+    const data = [
+      ...songs.sort((lhs, rhs) => {
+        const normalizedLhs = lhs[sortingBy]?.toLowerCase() || '';
+        const normalizedRhs = rhs[sortingBy]?.toLowerCase() || '';
+        if (normalizedLhs < normalizedRhs) {
+          return -1;
+        }
+        if (normalizedLhs > normalizedRhs) {
+          return 1;
+        }
+
+        return 0;
+      }),
+    ];
+    return {
+      data,
+    } as SongListModel;
+  }
 );
