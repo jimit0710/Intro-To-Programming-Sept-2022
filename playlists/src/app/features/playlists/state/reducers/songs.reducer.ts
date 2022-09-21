@@ -12,7 +12,7 @@ export interface SongState {
 }
 
 const initialState: SongState = {
-  songs: [{ id: '1', title: "Love's Holiday", artist: 'Earth Wind and Fire' }],
+  songs: [],
 };
 
 export const reducer = createReducer(initialState);
