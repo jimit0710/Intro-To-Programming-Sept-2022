@@ -27,8 +27,11 @@ export const mocks = [
   rest.post('http://localhost:1337/songs', async (req, res, ctx) => {
     const request = await req.json<SongCreate>();
     const response = { ...request, id: (++lastId).toString() + 'FAKE' };
-
-    return res(ctx.status(201), ctx.json(response));
+    if (response.artist === 'toad the wet sprocket') {
+      return res(ctx.status(400));
+    } else {
+      return res(ctx.status(201), ctx.json(response));
+    }
   }),
 ];
 

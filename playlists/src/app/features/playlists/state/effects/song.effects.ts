@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap, tap } from 'rxjs';
+import { catchError, concatMap, map, of, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SongEntity } from '../reducers/songs.reducer';
 import { SongEvents, SongDocuments } from '../songs.action';
@@ -12,13 +12,22 @@ export class SongEffects {
   addSong$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SongEvents.added), // When a action of type SongEvents.added happens (only only that!)
-      switchMap(
+      concatMap(
         (
           { payload } // get the payload off that action (the SongCreate instance)
         ) =>
           this.http
             .post<SongEntity>(this.apiUrl, payload) // Send it to the API
-            .pipe(map((payload) => SongDocuments.song({ payload }))) // When (later) it comes back from the API, turn it into a Song document
+            .pipe(
+              map((payload) => SongDocuments.song({ payload })),
+              catchError(() =>
+                of(
+                  SongEvents.error({
+                    payload: { message: 'Could Not Add That Song!' },
+                  })
+                )
+              )
+            ) // When (later) it comes back from the API, turn it into a Song document
       )
     );
   });

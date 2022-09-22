@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { SongSummaryModel } from '../../models';
+import { selectSongSummaryModel } from '../../state';
 
 @Component({
   selector: 'app-songs-summary',
@@ -9,6 +10,8 @@ import { SongSummaryModel } from '../../models';
   styleUrls: ['./songs-summary.component.css'],
 })
 export class SongsSummaryComponent {
-  model$!: Observable<SongSummaryModel>; // add some code here.
+  model$: Observable<SongSummaryModel> = this.store.select(
+    selectSongSummaryModel
+  );
   constructor(private store: Store) {}
 }
