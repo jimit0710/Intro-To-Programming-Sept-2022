@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using PlaylistsApi.Adapters;
 using PlaylistsApi.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<PlaylistsDataContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("songs");
+    options.UseSqlServer(connectionString);
+});
 
 builder.Services.AddScoped<IProvideTheSongCatalog, SongCatalog>();
 var app = builder.Build();
