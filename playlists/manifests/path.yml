@@ -6,7 +6,7 @@ metadata:
     name: playlists-web-path
 spec:
   rules:
-  - host: playlists.com
+  - host: www.playlists.com
     http:
       paths:
       - pathType: Prefix
