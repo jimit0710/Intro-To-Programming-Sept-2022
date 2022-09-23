@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using PlaylistsApi.Domain;
-
 namespace PlaylistsApi.Controllers;
 
+[ApiController]
 public class SongsController : ControllerBase
 {
     private readonly IProvideTheSongCatalog _songCatalog;
@@ -13,15 +12,18 @@ public class SongsController : ControllerBase
     }
 
     [HttpGet("/songs")]
-    public async Task<ActionResult> GetAllSongs()
+    public async Task<ActionResult<GetSongsResponse>> GetAllSongs()
     {
         GetSongsResponse response = await _songCatalog.GetAllSongsAsync();
         return Ok(response);
     }
 
+
     [HttpPost("/songs")]
-    public async Task<ActionResult> AddSong()
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<SongSummaryItemResponse>> AddSong([FromBody] SongCreateRequest request)
     {
-        return StatusCode(201);
+        SongSummaryItemResponse response = await _songCatalog.AddSongAsync(request);
+        return StatusCode(201, response);
     }
 }

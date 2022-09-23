@@ -12,6 +12,29 @@ public class SongCatalog : IProvideTheSongCatalog
         _context = context;
     }
 
+    public async Task<SongSummaryItemResponse> AddSongAsync(SongCreateRequest request)
+    {
+        var songToAdd = new SongEntity
+        {
+            Title = request.Title,
+            Album = request.Album,
+            Artist = request.Artist,
+            Created = DateTime.Now // Consider ISystemTime... but we ain't doing that again
+        };
+
+        _context.Songs.Add(songToAdd);
+        await _context.SaveChangesAsync();
+
+        var response = new SongSummaryItemResponse
+        {
+            Id = songToAdd.Id.ToString(),
+            Title = songToAdd.Title,
+            Album = songToAdd.Album,
+            Artist = songToAdd.Artist
+        };
+        return response;
+    }
+
     public async Task<GetSongsResponse> GetAllSongsAsync()
     {
         var data = await _context.Songs.OrderBy(s => s.Title)
