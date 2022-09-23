@@ -5,14 +5,16 @@ metadata:
   labels:
     name: playlists-api-ingress
   annotations:
-    traefik.ingress.kubernetes.io/router.middlwares: playlists-cors-promiscuous@kubernetescrd,playlists-stripprefix-regex@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: playlists-cors-promiscuous@kubernetescrd,playlists-stripprefix-regex@kubernetescrd
+
+
 spec:
   rules:
   - host: api.playlists.com
     http:
       paths:
       - pathType: Prefix
-        path: "/web/v1"
+        path: "/web/v1/"
         backend:
           service:
             name: playlists-api-service
