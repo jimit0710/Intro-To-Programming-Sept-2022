@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace PlaylistsApi.Models;
 
 public record GetSongsResponse
@@ -11,12 +10,13 @@ public record SongSummaryItemResponse
 {
     [Required]
     public string Id { get; set; } = string.Empty;
-    [Required]
+    [Required, MaxLength(50)]
     public string Title { get; set; } = string.Empty;
     [Required]
     public string Artist { get; set; } = string.Empty;
     public string? Album { get; set; }
 }
+
 
 public record SongCreateRequest
 {
@@ -26,4 +26,3 @@ public record SongCreateRequest
     public string Artist { get; set; } = string.Empty;
     public string? Album { get; set; }
 }
-
